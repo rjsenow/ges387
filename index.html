@@ -45,21 +45,7 @@
             <div class="collapse navbar-collapse" <p style="text-align:center;" id="bs-example-navbar-collapse-1" >
                 <ul class="nav navbar-nav">
                     <li>
-                        <a href="#" data-target="#myCarousel" data-slide-to="0"> <meta charset=utf-8 />
-  <title></title>
-  <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-  <link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
-  <style>
-    body { margin:0; padding:0; }
-    .map { position:absolute; top:0; bottom:0; width:100%; }
-  </style>
-</head>
-<body>
-<div id='map-one' class='map'> </div>
-<script>
-L.mapbox.accessToken = '<pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA>';
-  L.mapbox.map('map-one', 'mapbox.streets-satellite').setView([44.5906557,-104.7153345,241], 18);
-</script></body></a>
+                        <a href="#" data-target="#myCarousel" data-slide-to="0">Map 1</a>
                     </li>
                     <li>
                         <a href="#" data-target="#myCarousel" data-slide-to="1">Map 2</a>
@@ -115,6 +101,21 @@ L.mapbox.accessToken = '<pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJv
         <!-- Wrapper for Slides -->
         <div class="carousel-inner">
             <div id="#map1" class="item active">
+              <meta charset=utf-8 />
+<title></title>
+<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+<style>
+body { margin:0; padding:0; }
+.map { position:absolute; top:0; bottom:0; width:100%; }
+</style>
+</head>
+<body>
+<div id='map-one' class='map'> </div>
+<script>
+L.mapbox.accessToken = '<pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA>';
+L.mapbox.map('map-one', 'mapbox.streets-satellite').setView([44.5906557,-104.7153345,241], 18);
+</script></body>
                 <!-- Set the first background image using inline CSS below. -->
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 1');"></div>
                 <div class="carousel-caption">
