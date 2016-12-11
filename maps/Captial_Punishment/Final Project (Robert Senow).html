@@ -215,7 +215,7 @@
 		            $(".temporal-legend").text(startTimestamp);
 		        }
 	// control that shows state info on hover
-	var info = L.control({ position: 'bottomleft' });
+	var info = L.control();
 
 	info.onAdd = function (map) {
 		this._div = L.DomUtil.create('div', 'info');
