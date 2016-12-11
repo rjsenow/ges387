@@ -63,7 +63,7 @@
         $.getJSON("pop40.json")
     .done(function(data) {
     var info = processData(data);
-    createPropSymbols(info.timestamps, data);
+    // createPropSymbols(info.timestamps, data);
     createLegend(info.min,info.max);
     })
 
@@ -155,7 +155,7 @@
         // calculate the radius of the proportional symbols based on area
         function calcPropRadius(attributeValue) {
 
-            var scaleFactor = 0.004,   // the scale factor is used to scale the values
+            var scaleFactor = 0.0008,   // the scale factor is used to scale the values
                                        // the units of the radius are in meters
                                        // determine the scale factor based on the value range and the mapping scale
                 area = attributeValue * scaleFactor;
