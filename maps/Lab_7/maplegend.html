@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Leaflet Prop Symbol Map</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+<style>
+    .legend, .temporal-legend {
+          padding: 10px 75px;
+          font: 14px/16px Arial, Helvetica, sans-serif;
+          background: white;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            border-radius: 5px;
+      }
+      #legendTitle {
+            text-align: center;
+          margin-bottom: 15px;
+          font-variant: small-caps;
+      }
+      .symbolsContainer {
+          float: left;
+        margin-left: 50px;
+      }
+      .legendCircle {
+          border-radius:50%;
+          border: 1px solid #537898;
+          background: rgba(113, 133, 152, .6);
+        display: inline-block;
+      }
+      .legendValue {
+            position: absolute;
+            right: 8px;
+      }
+      </style>
+</head>
+
+<body>
+    <div id="map" style="height: 650px"></div>
+
+    <script>
+        var map = L.map('map').setView([37.8, -96], 4);
+
+        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+          attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+          id: 'mapbox.light',
+          accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA'
+        }).addTo(map);
+
+        // load the timeseries data
+        // change the file name to yours
+        $.getJSON("pop40.json")
+        .done(function(data) {
+            var info = processData(data);
+            createPropSymbols(info.timestamps, data);
+            createSliderUI(info.timestamps);
+        });
+        $.getJSON("pop40.json")
+    .done(function(data) {
+    var info = processData(data);
+    createPropSymbols(info.timestamps, data);
+    createLegend(info.min,info.max);
+    })
+
+        // process the data to derive values that will be used later, for example,
+        // the timestamp names (i.e., the name of each column) for use in the time slider labels, and
+        // the minimum/maximum values across the time series for use in a map legend (extra credit question)
+        // no need to change anything for this lab
+        function processData(data) {
+            var timestamps = [];
+            var	min = Infinity;
+            var	max = -Infinity;
+
+            for (var feature in data.features) {
+                var properties = data.features[feature].properties;
+
+                for (var attribute in properties) {
+                    if ( attribute != 'id' &&
+                         attribute != 'name' &&
+                         attribute != 'lat' &&
+                         attribute != 'lon' )
+                    {
+                        if ( $.inArray(attribute,timestamps) ===  -1) {
+                            timestamps.push(attribute);
+                        }
+                        if (properties[attribute] < min) {
+                            min = properties[attribute];
+                        }
+                        if (properties[attribute] > max) {
+                            max = properties[attribute];
+                        }
+                    }
+                }
+            }
+            return {
+                timestamps : timestamps,
+                min : min,
+                max : max
+            }
+        }
+
+        // draw the proportional symbols
+        function createPropSymbols(timestamps, data) {
+
+            cities = L.geoJson(data, {
+
+                pointToLayer: function(feature, latlng) {
+
+                    return L.circleMarker(latlng, {
+                        fillColor: '#708090',  // fill color of the circles
+                        color: '#311e39',      // border color of the circles
+                        weight: 2,             // circle line weight in pixels
+                        fillOpacity: 0.6       // fill opacity (0-1)
+                    }).on({
+
+                        mouseover: function(e) {
+                            this.openPopup();
+                            this.setStyle({fillColor: 'green'});  // fill color turns green when mouseover
+                        },
+                        mouseout: function(e) {
+                            this.closePopup();
+                            this.setStyle({fillColor: '#501e65'});  // fill turns original color when mouseout
+                        }
+                    });
+                }
+            }).addTo(map);
+
+            updatePropSymbols(timestamps[0]);
+
+        }
+
+
+        // resize each circle according to a value in the time series
+        function updatePropSymbols(timestamp) {
+
+            cities.eachLayer(function(layer) {
+
+                var props = layer.feature.properties;
+                var	radius = calcPropRadius(props[timestamp]);
+
+                // pop-up information (when mouseover) for each city is also defined here
+                var	popupContent = "<b>" + props.name + ': ' + String(props[timestamp]) + "</b><br>"
+                                   ;
+
+                layer.setRadius(radius);
+                layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) });
+            });
+        }
+
+        // calculate the radius of the proportional symbols based on area
+        function calcPropRadius(attributeValue) {
+
+            var scaleFactor = 0.004,   // the scale factor is used to scale the values
+                                       // the units of the radius are in meters
+                                       // determine the scale factor based on the value range and the mapping scale
+                area = attributeValue * scaleFactor;
+
+            return Math.sqrt(area/Math.PI);
+        }
+        function createLegend(min, max) {
+
+        	if (min < 10) {
+        		min = 10;
+        	}
+
+        	function roundNumber(inNumber) {
+
+        			return (Math.round(inNumber/10) * 10);
+        		}
+
+        		var legend = L.control( { position: 'bottomright' } );
+
+        		legend.onAdd = function(map) {
+
+        		var legendContainer = L.DomUtil.create("div", "legend");
+        		var symbolsContainer = L.DomUtil.create("div", "symbolsContainer");
+        		var classes = [roundNumber(min), roundNumber((max-min)/2), roundNumber(max)];
+        		var legendCircle;
+        		var lastRadius = 0;
+        		var currentRadius;
+        		var margin;
+
+        		L.DomEvent.addListener(legendContainer, 'mousedown', function(e) {
+        			L.DomEvent.stopPropagation(e);
+        		});
+
+        		$(legendContainer).append("<h2 id=’legendTitle’><u>Population Size<u></h2>");
+
+        		for (var i = 0; i <= classes.length-1; i++) {
+
+        			legendCircle = L.DomUtil.create("div", "legendCircle");
+
+        			currentRadius = calcPropRadius(classes[i]);
+
+        			margin = -currentRadius - lastRadius - 2;
+
+        			$(legendCircle).attr("style", "width: " + currentRadius*2 +
+        				"px; height: " + currentRadius*2 +
+        				"px; margin-left: " + margin + "px" );
+        			$(legendCircle).append("<span class='legendValue'>"+classes[i]+"</span>");
+
+        			$(symbolsContainer).append(legendCircle);
+
+        			lastRadius = currentRadius;
+
+        		}
+
+        		$(legendContainer).append(symbolsContainer);
+
+        		return legendContainer;
+
+        		};
+
+        	legend.addTo(map);
+
+        	} // end createLegend();
+
+        // add the temporal slider, no need to change anything for this lab
+        // here we use the HTML5 range type to create a simple slider
+        function createSliderUI(timestamps) {
+
+            var sliderControl = L.control({ position: 'bottomleft'} ); // position of the slider
+
+            sliderControl.onAdd = function(map) {
+
+                var slider = L.DomUtil.create("input", "range-slider");
+
+                L.DomEvent.addListener(slider, 'mousedown', function(e) {
+
+                    L.DomEvent.stopPropagation(e);
+
+                });
+
+                $(slider)
+                    .attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 10,'value': String(timestamps[0])})
+                    .on('input change', function() {
+                        updatePropSymbols($(this).val().toString());
+                        $(".temporal-legend").text(this.value);
+                    });
+
+                return slider;
+            }
+
+            sliderControl.addTo(map);
+            createTemporalLegend(timestamps[0]);
+        }
+
+        // add labels for the temporal slider, no need to change anything for this lab
+        function createTemporalLegend(startTimestamp) {
+
+            var temporalLegend = L.control({ position: 'bottomleft' }); // same position as the slider
+
+            temporalLegend.onAdd = function(map) {
+
+                var output = L.DomUtil.create("output", "temporal-legend");
+
+                return output;
+            }
+
+            temporalLegend.addTo(map);
+            $(".temporal-legend").text(startTimestamp);
+        }
+
+
+</script>
+
+</body>
+</html>

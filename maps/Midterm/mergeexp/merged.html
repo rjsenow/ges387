@@ -1,0 +1,219 @@
+﻿<!DOCTYPE html>
+<html>
+   <head>
+       <title>Equal_Interval - Copy</title>
+       <link href="leaflet.css" rel="stylesheet"/>
+       <script src="leaflet.js"></script>
+       <script src="WEI.js" type="text/javascript"></script>
+
+       <style>
+    /* Optional: adjust the values below to change the appearance of the legend */
+    .legend {
+        padding: 6px 8px;
+        line-height: 18px;
+        background: rgba(255,255,255,0.9);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+
+     /* Optional: adjust the values below to change the appearance of the legend color boxes */
+     .legend i {
+        width: 18px;
+        height: 18px;
+        float: left;
+        margin-right: 8px;
+        opacity: 0.7;
+    }
+</style>
+
+   </head>
+
+   <body>
+<a name="1_"></a>
+
+       <div id="map" style="height: 550px; "></div>
+
+       <script type="text/javascript">
+         var map = L.map(&apos;map&apos;).setView([41.8274,-87.6970], 10);
+
+         L.tileLayer(&apos;https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}&apos;, {
+           attribution: &apos;Map data &amp;copy; &lt;a href=&quot;http://openstreetmap.org&quot;&gt;OpenStreetMap&lt;/a&gt; contributors, &lt;a href=&quot;http://creativecommons.org/licenses/by-sa/2.0/&quot;&gt;CC-BY-SA&lt;/a&gt;, Imagery © &lt;a href=&quot;http://mapbox.com&quot;&gt;Mapbox&lt;/a&gt;&apos;,
+           maxZoom: 12,
+           minZoom: 5,
+           id: &apos;mapbox.light&apos;,
+           accessToken: &apos;pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA&apos;
+         }).addTo(map);
+
+         function getColor(value) {
+    return value &gt; 60680 ? &apos;#54278f&apos;:
+           value &gt; 45515  ? &apos;#756bb1&apos;:
+           value &gt; 30349  ? &apos;#9e9ac8&apos;:
+           value &gt; 15184  ? &apos;#cbc9e2&apos;:
+                           &apos;#f2f0f7&apos;;
+}
+function style(feature){
+    return {
+        fillColor: getColor(feature.properties.White),   // pop_den is the field name for the population density data
+        weight: 2,
+        opacity: 1,
+        color: &apos;gray&apos;,
+        fillOpacity: 0.9
+    };
+}
+         L.geoJson(data, {style:style}).addTo(map);
+
+         var legend = L.control({position: &apos;bottomright&apos;}); // Try the other three corners if you like.
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create(&apos;div&apos;, &apos;legend&apos;),
+        grades = [0, 15184, 30349, 45515, 60680]; // The break values to define the intervals of population, note we begin from 0 here
+
+    div.innerHTML = &apos;&lt;b&gt;&lt;br&gt;&lt;ins&gt;City of Chicago&lt;br&gt;Caucasian Population&lt;br&gt; 2010 &lt;/ins&gt;&lt;br&gt;&lt;/b&gt;&apos;; // The legend title, in this case it&apos;s Population Density 2011
+
+    // Loop through our the classes and generate a label with a colored square for each interval.
+    // If you are creating a similar choropleth map, you do not need to change lines below.
+    for (var i = 0; i &lt; grades.length; i++) {
+        div.innerHTML +=
+        &apos;&lt;i style=&quot;background:&apos; + getColor(grades[i] + 1) + &apos;&quot;&gt;&lt;/i&gt;&apos; +
+        grades[i] + (grades[i + 1] ? &apos;&amp;ndash;&apos; + grades[i + 1] + &apos;&lt;br&gt;&apos; : &apos;+&apos;);
+    }
+
+    return div;
+};
+
+legend.addTo(map);
+
+       </script>
+  
+
+<hr/>
+
+
+
+   
+
+   
+<a name="2_"></a>
+
+       <div id="map" style="height: 550px; "></div>
+
+       <script type="text/javascript">
+         var map = L.map(&apos;map&apos;).setView([41.8274,-87.6970], 10);
+
+         L.tileLayer(&apos;https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}&apos;, {
+           attribution: &apos;Map data &amp;copy; &lt;a href=&quot;http://openstreetmap.org&quot;&gt;OpenStreetMap&lt;/a&gt; contributors, &lt;a href=&quot;http://creativecommons.org/licenses/by-sa/2.0/&quot;&gt;CC-BY-SA&lt;/a&gt;, Imagery © &lt;a href=&quot;http://mapbox.com&quot;&gt;Mapbox&lt;/a&gt;&apos;,
+           maxZoom: 12,
+           minZoom: 5,
+           id: &apos;mapbox.light&apos;,
+           accessToken: &apos;pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA&apos;
+         }).addTo(map);
+
+         function getColor(value) {
+    return value &gt; 58033 ? &apos;#54278f&apos;:
+           value &gt; 34329  ? &apos;#756bb1&apos;:
+           value &gt; 18372  ? &apos;#9e9ac8&apos;:
+           value &gt; 6473  ? &apos;#cbc9e2&apos;:
+                           &apos;#f2f0f7&apos;;
+}
+function style(feature){
+    return {
+        fillColor: getColor(feature.properties.White),   // pop_den is the field name for the population density data
+        weight: 2,
+        opacity: 1,
+        color: &apos;gray&apos;,
+        fillOpacity: 0.9
+    };
+}
+         L.geoJson(data, {style:style}).addTo(map);
+
+         var legend = L.control({position: &apos;bottomright&apos;}); // Try the other three corners if you like.
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create(&apos;div&apos;, &apos;legend&apos;),
+        grades = [0, 6473, 18372, 34329, 58033]; // The break values to define the intervals of population, note we begin from 0 here
+
+    div.innerHTML = &apos;&lt;b&gt;&lt;br&gt;&lt;ins&gt;City of Chicago&lt;br&gt;Caucasian Population&lt;br&gt; 2010 &lt;/ins&gt;&lt;br&gt;&lt;/b&gt;&apos;; // The legend title, in this case it&apos;s Population Density 2011
+
+    // Loop through our the classes and generate a label with a colored square for each interval.
+    // If you are creating a similar choropleth map, you do not need to change lines below.
+    for (var i = 0; i &lt; grades.length; i++) {
+        div.innerHTML +=
+        &apos;&lt;i style=&quot;background:&apos; + getColor(grades[i] + 1) + &apos;&quot;&gt;&lt;/i&gt;&apos; +
+        grades[i] + (grades[i + 1] ? &apos;&amp;ndash;&apos; + grades[i + 1] + &apos;&lt;br&gt;&apos; : &apos;+&apos;);
+    }
+
+    return div;
+};
+
+legend.addTo(map);
+
+       </script>
+  
+
+<hr/>
+
+
+
+   
+
+   
+<a name="3_"></a>
+
+       <div id="map" style="height: 550px; "></div>
+
+       <script type="text/javascript">
+         var map = L.map(&apos;map&apos;).setView([41.8274,-87.6970], 10);
+
+         L.tileLayer(&apos;https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}&apos;, {
+           attribution: &apos;Map data &amp;copy; &lt;a href=&quot;http://openstreetmap.org&quot;&gt;OpenStreetMap&lt;/a&gt; contributors, &lt;a href=&quot;http://creativecommons.org/licenses/by-sa/2.0/&quot;&gt;CC-BY-SA&lt;/a&gt;, Imagery © &lt;a href=&quot;http://mapbox.com&quot;&gt;Mapbox&lt;/a&gt;&apos;,
+           maxZoom: 12,
+           minZoom: 5,
+           id: &apos;mapbox.light&apos;,
+           accessToken: &apos;pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA&apos;
+         }).addTo(map);
+
+         function getColor(value) {
+    return value &gt; 20969 ? &apos;#54278f&apos;:
+           value &gt; 9446  ? &apos;#756bb1&apos;:
+           value &gt; 2750  ? &apos;#9e9ac8&apos;:
+           value &gt; 229  ? &apos;#cbc9e2&apos;:
+                           &apos;#f2f0f7&apos;;
+}
+function style(feature){
+    return {
+        fillColor: getColor(feature.properties.White),   // pop_den is the field name for the population density data
+        weight: 2,
+        opacity: 1,
+        color: &apos;gray&apos;,
+        fillOpacity: 0.9
+    };
+}
+         L.geoJson(data, {style:style}).addTo(map);
+
+         var legend = L.control({position: &apos;bottomright&apos;}); // Try the other three corners if you like.
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create(&apos;div&apos;, &apos;legend&apos;),
+        grades = [0, 229, 2750, 9446, 20969]; // The break values to define the intervals of population, note we begin from 0 here
+
+    div.innerHTML = &apos;&lt;b&gt;&lt;br&gt;&lt;ins&gt;City of Chicago&lt;br&gt;Caucasian Population&lt;br&gt; 2010 &lt;/ins&gt;&lt;br&gt;&lt;/b&gt;&apos;; // The legend title, in this case it&apos;s Population Density 2011
+
+    // Loop through our the classes and generate a label with a colored square for each interval.
+    // If you are creating a similar choropleth map, you do not need to change lines below.
+    for (var i = 0; i &lt; grades.length; i++) {
+        div.innerHTML +=
+        &apos;&lt;i style=&quot;background:&apos; + getColor(grades[i] + 1) + &apos;&quot;&gt;&lt;/i&gt;&apos; +
+        grades[i] + (grades[i + 1] ? &apos;&amp;ndash;&apos; + grades[i + 1] + &apos;&lt;br&gt;&apos; : &apos;+&apos;);
+    }
+
+    return div;
+};
+
+legend.addTo(map);
+
+       </script>
+  </body>
+</html>

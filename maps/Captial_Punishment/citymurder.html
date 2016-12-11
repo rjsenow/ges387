@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>Captial Punishment of United States</title>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.css"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.0.1/leaflet.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+</head>
+
+<body>
+
+<div id="map" style="height: 650px"></div>
+
+<script>
+var map = L.map('map').setView([37.8, -96], 4);
+
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+	attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+	id: 'mapbox.light',
+	accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA'
+}).addTo(map);
+
+
+$.getJSON("map.json")
+			.done(function(data) {
+					var info = processData(data);
+					createPropSymbols(info.timestamps, data);
+					createSliderUI(info.timestamps);
+			});
+			function processData(data) {
+					var timestamps = [];
+					var	min = Infinity;
+					var	max = -Infinity;
+
+					for (var feature in data.features) {
+							var properties = data.features[feature].properties;
+
+							for (var attribute in properties) {
+									if ( attribute != 'id' &&
+											 attribute != 'name' &&
+											 attribute != 'lat' &&
+											 attribute != 'lon' )
+									{
+											if ( $.inArray(attribute,timestamps) ===  -1) {
+													timestamps.push(attribute);
+											}
+											if (properties[attribute] < min) {
+													min = properties[attribute];
+											}
+											if (properties[attribute] > max) {
+													max = properties[attribute];
+											}
+									}
+							}
+					}
+					return {
+							timestamps : timestamps,
+							min : min,
+							max : max
+					}
+			}
+
+			// draw the proportional symbols
+					function createPropSymbols(timestamps, data) {
+
+							cities = L.geoJson(data, {
+
+									pointToLayer: function(feature, latlng) {
+
+											return L.circleMarker(latlng, {
+													fillColor: '#501e65',  // fill color of the circles
+													color: '#311e39',      // border color of the circles
+													weight: 2,             // circle line weight in pixels
+													fillOpacity: 0.6       // fill opacity (0-1)
+											}).on({
+
+													mouseover: function(e) {
+															this.openPopup();
+															this.setStyle({fillColor: 'green'});  // fill color turns green when mouseover
+													},
+													mouseout: function(e) {
+															this.closePopup();
+															this.setStyle({fillColor: '#501e65'});  // fill turns original color when mouseout
+													}
+											});
+									}
+							}).addTo(map);
+
+							updatePropSymbols(timestamps[0]);
+
+					}
+
+					// resize each circle according to a value in the time series
+					function updatePropSymbols(timestamp) {
+
+							cities.eachLayer(function(layer) {
+
+									var props = layer.feature.properties;
+									var	radius = calcPropRadius(props[timestamp]);
+
+									// pop-up information (when mouseover) for each city is also defined here
+									var	popupContent = "<b>" + props.name + ': ' + String(props[timestamp]) + "</b><br>"
+																		 ;
+
+									layer.setRadius(radius);
+									layer.bindPopup(popupContent, { offset: new L.Point(0,-radius) });
+							});
+					}
+
+					// calculate the radius of the proportional symbols based on area
+					function calcPropRadius(attributeValue) {
+
+							var scaleFactor = 4,   // the scale factor is used to scale the values
+																				 // the units of the radius are in meters
+																				 // determine the scale factor based on the value range and the mapping scale
+									area = attributeValue * scaleFactor;
+
+							return Math.sqrt(area/Math.PI);
+					}
+
+					// add the temporal slider, no need to change anything for this lab
+					// here we use the HTML5 range type to create a simple slider
+					function createSliderUI(timestamps) {
+
+							var sliderControl = L.control({ position: 'bottomleft'} ); // position of the slider
+
+							sliderControl.onAdd = function(map) {
+
+									var slider = L.DomUtil.create("input", "range-slider");
+
+									L.DomEvent.addListener(slider, 'mousedown', function(e) {
+
+											L.DomEvent.stopPropagation(e);
+
+									});
+
+									$(slider)
+											.attr({'type':'range', 'max': timestamps[timestamps.length-1], 'min':timestamps[0], 'step': 1,'value': String(timestamps[0])})
+											.on('input change', function() {
+													updatePropSymbols($(this).val().toString());
+													$(".temporal-legend").text(this.value);
+											});
+
+									return slider;
+							}
+
+							sliderControl.addTo(map);
+							createTemporalLegend(timestamps[0]);
+					}
+
+					// add labels for the temporal slider, no need to change anything for this lab
+					function createTemporalLegend(startTimestamp) {
+									var temporalLegend = L.control({ position: 'bottomleft' }); // same position as the slider
+
+							temporalLegend.onAdd = function(map) {
+
+									var output = L.DomUtil.create("output", "temporal-legend");
+
+									return output;
+							}
+
+							temporalLegend.addTo(map);
+							$(".temporal-legend").text(startTimestamp);
+					}
+
+				</script>
+
+				</body>
+				</html>

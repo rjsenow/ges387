@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <title>Midterm Project(Robert Senow): Classification Methods</title>
+       <link rel="stylesheet" href="leaflet.css" />
+       <script src="leaflet.js"></script>
+       <script type="text/javascript" src="data.js"></script>
+       <style>
+       .leaflet-control-layers-toggle:after{
+    content:"Three Classification Methods Layers";
+    color:#FF4500;
+}
+.leaflet-control-layers-toggle{
+    width:200px;
+    background-position:3px 50% ;
+    padding:10px;
+    padding-left:36px;
+    text-decoration:none;
+    line-height:36px;
+
+}
+    /* Change the values below to adjust the appearance of the legend */
+    .legend {
+        padding: 6px 8px;
+        line-height: 28px;
+        background: rgba(255,255,255,0.9);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+
+     /* Change the values below to adjust the appearance of the legend color boxes */
+     .legend i {
+        width: 18px;
+        height: 18px;
+        float: left;
+        margin-right: 8px;
+        opacity: 0.7;
+    }
+
+</style>
+   </head>
+
+   <body>
+
+     <h1><ins>Classification Methods:</ins></h1>
+     <h2><ins> Three Different Classification Methods Being Use In This Study</ins></h2>
+     <h3>Created By: Robert John Senow</h3>
+       <div id="map" style="height: 700px"></div>
+
+       <script type="text/javascript">
+         var map = L.map('map').setView([41.8274, -87.6970], 10);
+// basemaps
+         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+           maxZoom: 12,
+           minZoom: 5,
+           id: 'mapbox.light',
+           accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA'
+         }).addTo(map);
+
+
+//functions for map styles: three classification methods
+         function getColor_nb(value) {
+           return value > 58033 ? '#54278f':
+                  value > 34329  ? '#756bb1':
+                  value > 18372  ? '#9e9ac8':
+                  value > 6473  ? '#cbc9e2':
+                                  '#f2f0f7';
+          }
+
+          function style_nb(feature){
+            return {
+                fillColor: getColor_nb(feature.properties.White),
+                weight: 2,
+                opacity: 1,
+                color: 'gray',
+                fillOpacity: 0.9
+              };
+          }
+
+          function getColor_q(value) {
+            return value > 20969 ? '#54278f':
+                   value > 9446  ? '#756bb1':
+                   value > 2750  ? '#9e9ac8':
+                   value > 229  ? '#cbc9e2':
+                                   '#f2f0f7';
+           }
+
+           function style_q(feature){
+             return {
+                 fillColor: getColor_q(feature.properties.White),
+                 weight: 2,
+                 opacity: 1,
+                 color: 'gray',
+                 fillOpacity: 0.9
+               };
+           }
+
+           function getColor_ei(value) {
+             return value > 60680 ? '#54278f':
+                    value > 45515  ? '#756bb1':
+                    value > 30349  ? '#9e9ac8':
+                    value > 15184  ? '#cbc9e2':
+                                    '#f2f0f7';
+         }
+
+            function style_ei(feature){
+              return {
+                  fillColor: getColor_ei(feature.properties.White),
+                  weight: 2,
+                  opacity: 1,
+                  color: 'gray',
+                  fillOpacity: 0.9
+                };
+            }
+
+
+// Define layers and group
+         var nb = L.geoJson(data, {style:style_nb}).addTo(map);
+         var q = L.geoJson(data, {style:style_q});
+         var ei = L.geoJson(data, {style:style_ei});
+
+         var layers = {
+           "Natural Breaks": nb,
+           "Quantile": q,
+           "Equal Interval": ei
+         };
+         //
+         L.control.layers(layers).addTo(map);
+//
+// define legend
+         var legend_nb = L.control({position: 'bottomright'}); // Try the other three corners if you like.
+         var legend_q = L.control({position: 'bottomright'});
+         var legend_ei = L.control({position: 'bottomright'});
+
+
+         legend_nb.onAdd = function (map) {
+
+           var div = L.DomUtil.create('div', 'legend'),
+               grades = [0, 6480, 18380, 34330, 58040]; // The break values to define the intervals of population, note we begin from 0 here
+
+           div.innerHTML = '<b><h4  style="font-size:195%;color:red;"><strong><ins>Natural Breaks (Jenks)</ins><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ins>Method</ins></strong></h4><h4 style="font-size:145%;"><ins>City of Chicago<br>Caucasian Population<br> 2010:</b>';
+
+    // If you are creating a similar choropleth map, you do not need to change lines below.
+      for (var i = 0; i < grades.length; i++) {
+          div.innerHTML +=
+          '<i style="background:' + getColor_nb(grades[i] + 1) + '"></i>' +
+          grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+      return div;
+      };
+
+
+      legend_q.onAdd = function (map) {
+
+        var div = L.DomUtil.create('div', 'legend'),
+            grades = [0, 230, 2750, 9450, 20970]; // The break values to define the intervals of population, note we begin from 0 here
+
+        div.innerHTML = '<b><h4  style="font-size:195%;color:red;"><strong><ins>Quantile Method</ins></strong></h4><h4 style="font-size:145%;"><ins>City of Chicago<br>Caucasian Population<br> 2010:</b>';
+
+
+      // If you are creating a similar choropleth map, you do not need to change lines below.
+      for (var i = 0; i < grades.length; i++) {
+       div.innerHTML +=
+       '<i style="background:' + getColor_q(grades[i] + 1) + '"></i>' +
+       grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+      return div;
+      };
+
+
+      legend_ei.onAdd = function (map) {
+
+       var div = L.DomUtil.create('div', 'legend'),
+          grades = [0, 15190, 30350, 45520, 60680]; // The break values to define the intervals of population, note we begin from 0 here
+
+      div.innerHTML = '<b><h4  style="font-size:195%;color:red;"><strong><ins>Equal Interval</ins><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<ins>Method<br></ins></strong></h4><h4 style="font-size:145%;"><ins>City of Chicago<br>Caucasian Population<br> 2010:</b>';
+
+
+      // If you are creating a similar choropleth map, you do not need to change lines below.
+      for (var i = 0; i < grades.length; i++) {
+       div.innerHTML +=
+       '<i style="background:' + getColor_ei(grades[i] + 1) + '"></i>' +
+       grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+      }
+      return div;
+      };
+
+      legend_nb.addTo(map);
+      currentlegend = legend_nb;
+
+      map.on('baselayerchange', function(eventLayer){
+          if (eventLayer.name === 'Quantile'){
+            map.removeControl(currentlegend);
+            currentlegend = legend_q;
+//             var info = L.control({position: 'topleft'});
+//
+// info.onAdd = function (map) {
+//    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+//    this.update();
+//    return this._div;
+// };
+//
+// // method that we will use to update the control based on feature properties passed
+// info.update = function (props) {
+//    this._div.innerHTML = '<h2 style="color:white;> Robert John Senow"</h2>' +  (props ?
+//        '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+//        : '<h4  style="font-size:195%;color:red;"><strong><ins>Quantile Method</ins></strong></h4>');
+// };
+//
+// info.addTo(map);
+            legend_q.addTo(map);
+
+          }
+
+          else if (eventLayer.name === 'Equal Interval'){
+            map.removeControl(currentlegend);
+            currentlegend = legend_ei;
+            var info = L.control({position: 'topleft'});
+//
+// info.onAdd = function (map) {
+//    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+//    this.update();
+//    return this._div;
+// };
+//
+// // method that we will use to update the control based on feature properties passed
+// info.update = function (props) {
+//    this._div.innerHTML = '<h2 style="color:white;> Robert John Senow"</h2>' +  (props ?
+//        '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+//        : '<h4  style="font-size:195%;color:red;"><strong><ins>Equal Interval Method</ins></strong></h4>');
+// };
+//
+// info.addTo(map);
+            legend_ei.addTo(map);
+          }
+          else if (eventLayer.name === 'Natural Breaks'){
+            map.removeControl(currentlegend);
+            currentlegend = legend_nb;
+//             var info = L.control({position: 'topleft'});
+//
+// info.onAdd = function (map) {
+//    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+//    this.update();
+//    return this._div;
+// };
+//
+// // method that we will use to update the control based on feature properties passed
+// info.update = function (props) {
+//    this._div.innerHTML = '<h2 style="color:white;> Robert John Senow"</h2>' +  (props ?
+//        '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+//        : '<h4  style="font-size:195%;color:red;"><strong><ins>Natural Breaks (Jenks) Method</ins></strong></h4>');
+// };
+//
+// info.addTo(map);
+            legend_nb.addTo(map);
+          }
+      });
+
+
+         </script>
+  </body>
+</html>

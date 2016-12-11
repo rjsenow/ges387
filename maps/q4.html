@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Lab 2(Robert John Senow Cruise History)</title>
+    <link rel="stylesheet" href="leaflet.css" />
+    <script src="leaflet.js"></script>
+    <style>
+ /* Optional: adjust the values below to change the appearance of the legend */
+ .legend {
+     padding: 6px 8px;
+     line-height: 18px;
+     background: rgba(255,255,255,0.9);
+     box-shadow: 0 0 15px rgba(0,0,0,0.2);
+     border-radius: 5px;
+ }
+
+  /* Optional: adjust the values below to change the appearance of the legend color boxes */
+  .legend i {
+     width: 18px;
+     height: 18px;
+     float: left;
+     margin-right: 8px;
+     opacity: 0.7;
+ }
+</style>
+    </head>
+
+    <body>
+    <div id="map" style="height: 650px"></div>
+    <script type="text/javascript">
+    var map = L.map('map').setView([17.749,-76.465], 5);
+    var marker1 = L.marker([25.7823072,-80.3010433]).addTo(map);
+    var marker2 = L.marker([24.576085,-75.9542477]).addTo(map);
+    var marker3 = L.marker([21.173266,-68.852994]).addTo(map);
+    var marker4 = L.marker([18.3412767,-64.9391815]).addTo(map);
+    var marker5 = L.marker([18.3848136,-66.1283815]).addTo(map);
+    var marker6 = L.marker([21.4680081,-71.1748456]).addTo(map);
+    var marker7 = L.marker([23.281360,-77.926413]).addTo(map);
+
+
+    marker1.bindPopup("Day 1: Depart from Miami, FLA <p>Day 8: Arrive in Miami, FLA</p>");
+    marker2.bindPopup("Day 2: Arrive in Half Moon Cay, Bahamas");
+    marker3.bindPopup("Day 3: At Sea Day");
+    marker4.bindPopup("Day 4: Arrive in Charlotte Amalie (St.Thomas), USVI");
+    marker5.bindPopup("Day 5: Arrive in San Juan, Puerto Rico");
+    marker6.bindPopup("Day 6: Arrive in Grand Turk, Turks & Caicos Islands");
+    marker7.bindPopup("Day 7: At Sea Day");
+
+
+    var myIcon = L.icon({
+    iconUrl: 'images/marker_green.png',
+    iconSize: [25, 41],
+    iconAnchor: [25, 41],
+    popupAnchor: [25, 41],
+  });
+
+    var marker1 = L.marker([26.1411526, -80.2200132], {icon: myIcon}).addTo(map);
+    var marker2 = L.marker([20.941242,  -74.488811], {icon: myIcon}).addTo(map);
+    var marker3 = L.marker([21.4662209, -71.1425732], {icon: myIcon}).addTo(map);
+    var marker4 = L.marker([18.433050,  -68.962779], {icon: myIcon}).addTo(map);
+    var marker5 = L.marker([12.1285286, -68.933534], {icon: myIcon}).addTo(map);
+    var marker6 = L.marker([12.5083313, -70.0307494], {icon: myIcon}).addTo(map);
+    var marker7 = L.marker([19.072363,  -75.433257], {icon: myIcon}).addTo(map);
+
+
+    marker1.bindPopup("Day 1: Depart from Fort Lauderdale, FLA <p>Day 8: Arrive in Fort Lauderdale, FLA</p>");
+    marker2.bindPopup("Day 2: At Sea Day");
+    marker3.bindPopup("Day 3: Arrive in Grand Turk, Turks & Caicos Islands");
+    marker4.bindPopup("Day 4: Arrive in La Romanana, Dominican Republic");
+    marker5.bindPopup("Day 5: Arrive in Willemstad, Curacao");
+    marker6.bindPopup("Day 6: Arrive in Oranjestad, Aruba");
+    marker7.bindPopup("Day 7: At Sea Day");
+
+
+    var myredIcon = L.icon({
+    iconUrl: 'images/red_pin.png',
+    iconSize: [25, 41],
+    iconAnchor: [25, 41],
+    popupAnchor: [25, 41],
+  });
+
+    var marker1 = L.marker([25.770186, -80.163522], {icon: myredIcon}).addTo(map);
+    var marker2 = L.marker([22.971439,-85.694925], {icon: myredIcon}).addTo(map);
+    var marker3 = L.marker([17.5056225,-88.2307928], {icon: myredIcon}).addTo(map);
+    var marker4 = L.marker([16.3316929,-86.5422324], {icon: myredIcon}).addTo(map);
+    var marker5 = L.marker([19.2917004,-81.3764141], {icon: myredIcon}).addTo(map);
+    var marker6 = L.marker([20.6540285, -87.1067159], {icon: myredIcon}).addTo(map);
+    var marker7 = L.marker([24.1021649, -82.8108047], {icon: myredIcon}).addTo(map);
+
+
+
+    marker1.bindPopup("Day 1: Depart from Miami, FLA <p>Day 8: Arrive in Miami, FLA</p>");
+    marker2.bindPopup("Day 2: At Sea Day");
+    marker3.bindPopup("Day 3: Arrive in Belize City, Belize");
+    marker4.bindPopup("Day 4: Arrive in Roatan Island, Honduras");
+    marker5.bindPopup("Day 5: Arrive in George Town, Grand  Cayman Islands");
+    marker6.bindPopup("Day 6: Arrive in Playa Del Carmen (via Cozumel), Mexico");
+    marker7.bindPopup("Day 7: At Sea Day");
+
+    var info = L.control({position: 'bottomleft'});
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h2 style="color:white;> Robert John Senow Cruise History"</h2>' +  (props ?
+        '<b>' + props.name + '</b><br />' + props.density + ' people / mi<sup>2</sup>'
+        : '<h4  style="font-size:175%;color:white;"><strong><ins>Robert John Senow Cruise History</ins></strong></h4> <p style="font-size:165%;color:red;">Red Marker - 2006 Cruise Valor</p><p style="font-size:165%;color:green;">Green Marker - 2015 Cruise Conquest</p><p style="font-size:165%;color:cornflowerblue;">Blue Marker - 2016 Cruise Glory</p>');
+};
+
+info.addTo(map);
+
+    L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+      attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+      maxZoom: 8,
+      minZoom: 4,
+      id: 'mapbox.streets-satellite',
+      accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA'
+                }).addTo(map);
+            </script>
+   </body>
+</html>

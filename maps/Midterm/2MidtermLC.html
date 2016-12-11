@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <title>Midterm</title>
+       <link rel="stylesheet" href="leaflet.css" />
+       <script src="leaflet.js"></script>
+       <script type="text/javascript" src="datarace.js"></script>
+		 </head>
+
+		 <body>
+<script>
+
+var mbAttr = 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+		'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+		'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+	mbUrl = 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA';
+
+var grayscale   = L.tileLayer(mbUrl, {id: 'mapbox.light', attribution: mbAttr}),
+	streets  = L.tileLayer(mbUrl, {id: 'mapbox.light',   attribution: mbAttr});
+
+ var map = L.map('map', {
+	 center: [41.8274, -87.6970],
+	 zoom: 10,
+	 layers: [grayscale, streets]
+ });
+
+	L.control.layers(baseMaps, overlayMaps).addTo(map);
+
+</script>
+
+	</body>
+	</html>

@@ -23,7 +23,62 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+        body {
+            height: 700px;
+        }
 
+        .item{
+          margin-left:-10px;
+          margin-right:-10px;
+          height:700px;
+        }
+
+        @media (min-width: 1200px) {
+          .item{
+            margin-top: 40px;
+          }
+          .carousel-caption{
+            bottom: 70px;
+          }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+          .item{
+            margin-top: 90px;
+          }
+          .carousel-caption{
+            bottom: 120px;
+          }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px){
+          .item{
+            margin-top: 90px;
+          }
+          .carousel-caption{
+            bottom: 120px;
+          }
+        }
+
+        @media (min-width: 488px) and (max-width: 767px) {
+          .item{
+            margin-top: 40px;
+          }
+          .carousel-caption{
+            bottom: 70px;
+          }
+        }
+
+        @media (max-width: 487px){
+          .item{
+            margin-top: 90px;
+          }
+          .carousel-caption{
+            bottom: 120px;
+          }
+        }
+    </style>
 </head>
 
 <body>
@@ -69,12 +124,10 @@
                         <a href="#" data-target="#myCarousel" data-slide-to="7">Map 7</a>
                     </li>
                     <li>
-                        <a href="#" data-target="#myCarousel" data-slide-to="8">Map 8</a>
+                        <a href="#" data-target="#myCarousel" data-slide-to="8">Final</a>
                     </li>
-                    <li>
-                        <a href="#" data-target="#myCarousel" data-slide-to="9">Final</a>
-                    </li>
-                </ul>
+
+                    </ul>
             </div>
             <!-- /.navbar-collapse -->
         </div>
@@ -94,7 +147,7 @@
             <li data-target="#myCarousel" data-slide-to="6"></li>
             <li data-target="#myCarousel" data-slide-to="7"></li>
             <li data-target="#myCarousel" data-slide-to="8"></li>
-            <li data-target="#myCarousel" data-slide-to="9"></li>
+
 
         </ol>
 
@@ -102,12 +155,12 @@
         <div class="carousel-inner">
             <div id="#map1" class="item active">
                 <!-- Set the first background image using inline CSS below. -->
-                <meta charset=utf-8 />
+                <!-- <meta charset=utf-8 />
 <title></title>
 <script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
-<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' />
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' /> -->
 
-</head>
+<!-- </head>
 <body><script></script></body>
 
 <body>
@@ -122,13 +175,15 @@ minZoom: 18,
 id: 'mapbox.streets-satellite',
 accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA'
       }).addTo(map);
-  </script>
+  </script> -->
+                <iframe src="maps\Basemap_MapBox.html" height=1500px width=100% ></iframe>
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 1');"></div>
                 <div class="carousel-caption">
                     <h2>Caption 1</h2>
                 </div>
             </div>
-            <div id="#map2"class="item">
+            <div id="#map2" class="item">
+              <iframe src="maps\q4.html" height=1500px width=100% ></iframe>
                 <!-- Set the second background image using inline CSS below. -->
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 2');"></div>
                 <div class="carousel-caption">
@@ -136,6 +191,7 @@ accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0
                 </div>
             </div>
             <div class="item">
+              <iframe src="maps\Lab_3\indian.html" height=1500px width=100% ></iframe>
                 <!-- Set the third background image using inline CSS below. -->
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 3');"></div>
                 <div class="carousel-caption">
@@ -144,6 +200,7 @@ accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0
             </div>
 
             <div class="item">
+              <iframe src="maps\Midterm Project (Robert Senow).html" height=1500px width=100% ></iframe>
                 <!-- Set the fourth background image using inline CSS below. -->
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map Midterm');"></div>
                 <div class="carousel-caption">
@@ -158,6 +215,7 @@ accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0
                 </div>
             </div>
             <div class="item">
+              <iframe src="maps\Lab_5\extracredit.html" height=900px width=100% ></iframe>
                 <!-- Set the fourth background image using inline CSS below. -->
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 5');"></div>
                 <div class="carousel-caption">
@@ -165,6 +223,7 @@ accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0
                 </div>
             </div>
             <div class="item">
+              <iframe src="maps\custom.html" height=900px width=100% ></iframe>
                 <!-- Set the fourth background image using inline CSS below. -->
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 6');"></div>
                 <div class="carousel-caption">
@@ -172,6 +231,7 @@ accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0
                 </div>
             </div>
             <div class="item">
+              <iframe src="maps\Lab_7\maplegend.html" height=900px width=100% ></iframe>
                 <!-- Set the fourth background image using inline CSS below. -->
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 7');"></div>
                 <div class="carousel-caption">
@@ -179,28 +239,29 @@ accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0
                 </div>
             </div>
             <div class="item">
+              <iframe src="maps\Captial_Punishment\Final Project (Robert Senow).html" height=900px width=100% ></iframe>
                 <!-- Set the fourth background image using inline CSS below. -->
                 <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 8');"></div>
-                <div class="carousel-caption">
-                    <h2>Caption 8</h2>
-                </div>
-            </div>
-            <div class="item">
-                <!-- Set the fourth background image using inline CSS below. -->
-                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map Final');"></div>
                 <div class="carousel-caption">
                     <h2>Caption Final</h2>
                 </div>
             </div>
+            <!-- <div class="item">
+                <!-- Set the fourth background image using inline CSS below. -->
+                <!-- <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map Final');"></div>
+                <div class="carousel-caption">
+                    <h2>Caption Final</h2>
+                </div>
+            </div> --> -->
         </div>
 
         <!-- Controls -->
-        <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+        <!-- <a class="left carousel-control" href="#myCarousel" data-slide="prev">
             <span class="icon-prev"></span>
         </a>
         <a class="right carousel-control" href="#myCarousel" data-slide="next">
             <span class="icon-next"></span>
-        </a>
+        </a> -->
 
     </header>
 
@@ -238,7 +299,7 @@ accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0
     <!-- Script to Activate the Carousel -->
     <script>
     $('.carousel').carousel({
-        interval: 5000 //changes the speed
+        interval: 10000 //changes the speed
     })
     </script>
 
