@@ -97,6 +97,32 @@
     marker6.bindPopup("Day 6: Arrive in Playa Del Carmen (via Cozumel), Mexico");
     marker7.bindPopup("Day 7: At Sea Day");
 
+
+    var myorangeIcon = L.icon({
+    iconUrl: 'images/marker_orange.png',
+    iconSize: [25, 41],
+    iconAnchor: [25, 41],
+    popupAnchor: [25, 41],
+  });
+
+    var marker1 = L.marker([28.4105901, -80.6254972], {icon: myorangeIcon}).addTo(map);
+    var marker2 = L.marker([21.8967521,-76.0657019], {icon: myorangeIcon}).addTo(map);
+    var marker3 = L.marker([19.8326122,-70.7761165], {icon: myorangeIcon}).addTo(map);
+    var marker4 = L.marker([18.3662767,-64.9691815], {icon: myorangeIcon}).addTo(map);
+    var marker5 = L.marker([18.3948136,-66.1283815], {icon: myorangeIcon}).addTo(map);
+    var marker6 = L.marker([21.9762209, -71.2425732], {icon: myorangeIcon}).addTo(map);
+    var marker7 = L.marker([26.091501, -72.6586237], {icon: myorangeIcon}).addTo(map);
+
+
+
+    marker1.bindPopup("Day 1: Depart from Cape Canaveral, FLA <p>Day 8: Arrive in Cape Canaveral, FLA</p>");
+    marker2.bindPopup("Day 2: At Sea Day");
+    marker3.bindPopup("Day 3: Arrive in Amber Cove, Dominican Republic");
+    marker4.bindPopup("Day 4: Arrive in St. Thomas, USVI");
+    marker5.bindPopup("Day 5: Arrive in San Juan, Puerto Rico");
+    marker6.bindPopup("Day 6: Arrive in Grand Turk, Turks & Caicos Islands");
+    marker7.bindPopup("Day 7: At Sea Day");
+
     var info = L.control({position: 'bottomleft'});
 
 info.onAdd = function (map) {
