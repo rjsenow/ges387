@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+   <head>
+       <title>Lab 3</title>
+       <link rel="stylesheet" href="leaflet.css" />
+       <script src="leaflet.js"></script>
+       <script type="text/javascript" src="data.js"></script>
+       <style>
+    /* Optional: adjust the values below to change the appearance of the legend */
+    .legend {
+        padding: 6px 8px;
+        line-height: 18px;
+        background: rgba(255,255,255,0.9);
+        box-shadow: 0 0 15px rgba(0,0,0,0.2);
+        border-radius: 5px;
+    }
+
+     /* Optional: adjust the values below to change the appearance of the legend color boxes */
+     .legend i {
+        width: 18px;
+        height: 18px;
+        float: left;
+        margin-right: 8px;
+        opacity: 0.7;
+    }
+</style>
+   </head>
+
+   <body>
+       <div id="map" style="height: 550px; "></div>
+
+       <script type="text/javascript">
+         var map = L.map('map').setView([51.48,-0.07], 10);
+
+         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+           attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+           maxZoom: 11,
+           minZoom: 5,
+           id: 'mapbox.light',
+           accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA'
+         }).addTo(map);
+         L.geoJson(data).addTo(map);
+         function getColor(value) {
+           return value > 139 ? '#a50f15':
+           value > 87  ? '#de2d26':
+           value > 53  ? '#fb6a4a':
+           value > 32  ? '#fcae91':
+                         '#fee5d9';
+}
+
+          function style(feature){
+              return {
+                  fillColor: getColor(feature.properties.pop_den),
+                  weight: 2,
+                  opacity: 1,
+                  color: 'gray',
+                  fillOpacity: 0.9
+              };
+          }
+
+         L.geoJson(data, {style:style}).addTo(map);
+         var legend = L.control({position: 'bottomright'}); // Try the other three corners if you like.
+
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'legend'),
+        grades = [0, 32, 53, 87, 139]; // The break values to define the intervals of population, note we begin from 0 here
+
+    div.innerHTML = '<b><ins>Population Density</ins><br><ins>2011 (Persons per Hectare)</ins><br></b>'; // The legend title, in this case it's Population Density 2011
+
+    // Loop through our the classes and generate a label with a colored square for each interval.
+    // If you are creating a similar choropleth map, you do not need to change lines below.
+    for (var i = 0; i < grades.length; i++) {
+        div.innerHTML +=
+        '<i style="background:' + getColor(grades[i] + 1) + '"></i>' +
+        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(map);
+
+       </script>
+  </body>
+</html>

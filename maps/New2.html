@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>New2</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="leaflet.css" />
+	    <script src="leaflet/leaflet.js"></script>
+	    <script src="white_quantile.geojson" type="text/javascript"></script>
+	    <script src="white_Natural_Break_Jenks.geojson" type="text/javascript"></script>
+			<script src="white_Equal_Interval.geojson" type="text/javascript"></script>
+	    <style>
+	        html, body, #map {
+	            height: 100%;
+	        }
+	        body {
+	            padding: 0;
+	            margin: 0;
+	        }
+	    </style>
+	    </head>
+
+			<body>
+    <div id="race"></div>
+    <script type="text/javascript">
+
+		L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			maxZoom: 11,
+			minZoom: 5,
+			id: 'mapbox.light',
+			accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA'
+		}).addTo(race);
+
+        var race = L.map('race', {
+            center: [41.8274, -87.6970],
+            zoom: 10
+        });
+
+
+        var race = new L.LayerGroup();
+        L.geoJson(white_quantile).addTo(race);
+        L.geoJson(white_Equal_Interval).addTo(race);
+			  L.geoJson(white_Natural_Break_Jenks).addTo(race);
+
+    </script>
+</body>

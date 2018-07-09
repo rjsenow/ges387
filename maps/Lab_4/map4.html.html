@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+   <head>
+     <title>Hexbin Map</title>
+     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.5/leaflet.css"/>
+     <script src="http://cdn.leafletjs.com/leaflet-0.5/leaflet-src.js"></script>
+
+     <script src="http://d3js.org/d3.v3.min.js"></script>
+     <script src="http://d3js.org/d3.hexbin.v0.js"></script>
+
+     <script type="text/javascript" src="http://raw.github.com/affinitybridge/d3-demos-quakes/master/js/colorbrewer.js"></script>
+     <script type="text/javascript" src="http://raw.github.com/affinitybridge/d3-demos-quakes/master/js/leaflet.hexbin-layer.js"></script>
+     <style type="text/css">
+  html, body { margin: 0; padding: 0; height: 100%; }
+  #map { min-height: 100%; }
+  .hexagon {opacity: 0.7}
+  /* Optional: adjust the values below to change the appearance of the legend */
+     .legend {
+         padding: 6px 8px;
+         line-height: 18px;
+         background: rgba(255,255,255,0.9);
+         box-shadow: 0 0 15px rgba(0,0,0,0.2);
+         border-radius: 5px;
+     }
+
+      /* Optional: adjust the values below to change the appearance of the legend color boxes */
+      .legend i {
+         width: 18px;
+         height: 18px;
+         float: left;
+         margin-right: 8px;
+         opacity: 0.7;
+     }
+</style>
+   </head>
+
+   <body>
+     <!--Create a div container for the map without specifying height-->
+     <div id='map'></div>
+
+     <script type="text/javascript">
+
+           //As always, initialize the map using L.map
+           //The center and zoom level is for Chicago
+           var map = L.map('map').setView([41.8333926,-88.0123393], 10);
+
+           //Then add mapbox tilelayer as the basemap
+           //I used mapbox.dark, you are free to use other tile maps, but it needs to be appropriate (not too distracting)
+           //Please use your own mapbox token, if mapbox tiles are used
+           L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+             attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery &copy; <a href="http://mapbox.com">Mapbox</a>',
+             id: 'mapbox.dark',
+             accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA'
+           }).addTo(map);
+           /* d3.json reads in the geojson file (robbery.geojson) we exported from QGIS
+ * L.hexLayer is a leaflet function for creating hexbins based on the input data
+ * The hexagons will be styled based on the hex_style function that is defined in the following code snippet
+ */
+d3.json("robbery.geojson", function(collection) {
+    L.hexLayer(collection, {
+        applyStyle: hex_style
+    }).addTo(map);
+});
+
+/* First, define the variables to be used in the hex_style function.
+ * You can replace the number of classes to be rendered,
+ * and the colorbrewer color scheme: http://colorbrewer2.org/ (see image below for more info)
+ */
+var max, scale,
+    classes = 9,    // number of classes to use
+    scheme = colorbrewer["RdYlGn"][classes];  // name of the color scheme from clorbrewer
+
+/* The function hex_style below determines a quantize classification/equal interval (https://goo.gl/CfjNH3)
+ * based on the map's initial data density (which is based on the initial zoom level)
+ * and applies the selected color scheme accordingly.
+ */
+function hex_style(hexagons) {
+    // Maintain a density scale relative to initial zoom level.
+    if (!(max && scale)) {
+        max = d3.max(hexagons.data(), function (d) { return d.length; });
+        scale = d3.scale.quantize()  // quantize classification method from D3, there are more options: https://goo.gl/6DMHFe
+                  .domain([0, max])
+                  .range(d3.range(classes));
+    }
+
+    hexagons
+        .attr("stroke", scheme[classes - 1])
+        .attr("fill", function (d) {
+            return scheme[scale(d.length)];
+        });
+}
+var legend = L.control({position: 'bottomleft'}); // Try the other three corners if you like.
+
+    legend.onAdd = function (map) {
+
+     var div = L.DomUtil.create('div', 'legend');
+
+     div.innerHTML = '<b>Robbery Incidents <br> 2015 <br></b>'; // The legend title
+
+     //
+     var q= d3.scale.quantize()   // D3 also offers other classification methods: https://goo.gl/6DMHFe
+               .domain([0, 269])   // I will show you how I got the 269 (maximum count) later in class.
+               .range(d3.range(classes));
+
+     // Loop through our the classes and generate a label with a colored square for each interval.
+     for (var i = 0; i < classes; i++) {
+         div.innerHTML +=
+         '<i style="background:' + scheme[i] + '"></i>' + Math.round(d3.min(q.invertExtent(i)))+ '&ndash;' +
+         Math.round(d3.max(q.invertExtent(i))) + '<br>';
+     }
+
+     return div;
+    };
+
+    legend.addTo(map);
+     </script>
+
+   </body>
+</html>

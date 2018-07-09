@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>GES 387 - Interactive Cartography</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/full-slider.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        body {
+            height: 700px;
+        }
+
+        .item{
+          margin-left:-10px;
+          margin-right:-10px;
+          height:700px;
+        }
+
+        @media (min-width: 1200px) {
+          .item{
+            margin-top: -5px;
+          }
+          .carousel-caption{
+            bottom: 70px;
+          }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+          .item{
+            margin-top: 90px;
+          }
+          .carousel-caption{
+            bottom: 120px;
+          }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px){
+          .item{
+            margin-top: 90px;
+          }
+          .carousel-caption{
+            bottom: 120px;
+          }
+        }
+
+        @media (min-width: 488px) and (max-width: 767px) {
+          .item{
+            margin-top: 40px;
+          }
+          .carousel-caption{
+            bottom: 70px;
+          }
+        }
+
+        @media (max-width: 487px){
+          .item{
+            margin-top: 90px;
+          }
+          .carousel-caption{
+            bottom: 120px;
+          }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1 style="font-size:300%;" a class="navbar-brand" href="#">GES 387 - Interactive Cartography - Robert John Senow </h> &nbsp
+                  <img src="http://gdurl.com/zeLT" alt="EagleLogo" align="top" style="float:right;width:50px;height:50px;"> <p style="text-indent: 5em;"></P>
+                      </div>
+            <div class="collapse navbar-collapse" <p style="text-align:center;" id="bs-example-navbar-collapse-1" >
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="#" data-target="#myCarousel" data-slide-to="0">Map 1</a>
+                    </li>
+                    <li>
+                        <a href="#" data-target="#myCarousel" data-slide-to="1">Map 2</a>
+                    </li>
+                    <li>
+                        <a href="#" data-target="#myCarousel" data-slide-to="2">Map 3</a>
+                    </li>
+                    <li>
+                        <a href="#" data-target="#myCarousel" data-slide-to="3">Midterm</a>
+                    </li>
+                    <li>
+                        <a href="#" data-target="#myCarousel" data-slide-to="4">Map 4</a>
+                    </li>
+                    <li>
+                        <a href="#" data-target="#myCarousel" data-slide-to="5">Map 5</a>
+                    </li>
+                    <li>
+                        <a href="#" data-target="#myCarousel" data-slide-to="6">Map 6</a>
+                    </li>
+                    <li>
+                        <a href="#" data-target="#myCarousel" data-slide-to="7">Map 7</a>
+                    </li>
+                    <li>
+                        <a href="#" data-target="#myCarousel" data-slide-to="8">Final</a>
+                    </li>
+
+                    </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Full Page Image Background Carousel Header -->
+    <header id="myCarousel" class="carousel slide">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+            <li data-target="#myCarousel" data-slide-to="3"></li>
+            <li data-target="#myCarousel" data-slide-to="4"></li>
+            <li data-target="#myCarousel" data-slide-to="5"></li>
+            <li data-target="#myCarousel" data-slide-to="6"></li>
+            <li data-target="#myCarousel" data-slide-to="7"></li>
+            <li data-target="#myCarousel" data-slide-to="8"></li>
+
+
+        </ol>
+
+        <!-- Wrapper for Slides -->
+        <div class="carousel-inner">
+            <div id="#map1" class="item active">
+                <!-- Set the first background image using inline CSS below. -->
+                <!-- <meta charset=utf-8 />
+<title></title>
+<script src='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.js'></script>
+<link href='https://api.mapbox.com/mapbox.js/v2.4.0/mapbox.css' rel='stylesheet' /> -->
+<!-- </head>
+<body><script></script></body>
+
+<body>
+<div id="map" style="height: 920px"></div><script type="text/javascript">
+var map = L.map('map').setView([44.5906557,-104.7153345,241], 18);
+
+L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
+maxZoom: 18,
+minZoom: 18,
+id: 'mapbox.streets-satellite',
+accessToken: 'pk.eyJ1IjoicmpzZW5vdyIsImEiOiJjaXQzZmR3NGQwdXVrMnBraDJvOXBhZzRvIn0.KMQkUvlQ2E_2TdaO86j-XA'
+      }).addTo(map);
+  </script> -->
+                <iframe src="maps\Basemap_MapBox.html" height=1500px width=100% ></iframe>
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 1');"></div>
+                <div class="carousel-caption">
+                    <!-- <h2>Caption 1</h2> -->
+                </div>
+            </div>
+            <div id="#map2" class="item">
+              <iframe src="maps/q4.html" height=1500px width=100% ></iframe>
+                <!-- Set the second background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 2');"></div>
+                <div class="carousel-caption">
+                    <!-- <h2>Caption 2</h2> -->
+                </div>
+            </div>
+            <div class="item">
+              <iframe src="maps\Lab_3\indian.html" height=1500px width=100% ></iframe>
+                <!-- Set the third background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 3');"></div>
+                <div class="carousel-caption">
+                    <h2><p style="color:red;">Indian Population in the City of London</p></h2>
+                </div>
+            </div>
+
+            <div class="item">
+              <iframe src="maps\Midterm Project (Robert Senow).html" height=1500px width=100% ></iframe>
+                <!-- Set the fourth background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map Midterm');"></div>
+                <div class="carousel-caption">
+                        <h2><p style="color:red;">Caucasian Population in the City of Chicago</p></h2>
+                </div>
+            </div>
+            <div class="item">
+                          <iframe src="maps\styling.html" height=700px width=100% ></iframe>
+                <!-- Set the fourth background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 4');"></div>
+                <div class="carousel-caption">
+                      <h2><p style="color:red;">Crime Pattern in the City of Chicago</p></h2>
+                </div>
+            </div>
+            <div class="item">
+              <iframe src="maps\Lab_5\extracredit.html" height=900px width=100% ></iframe>
+                <!-- Set the fourth background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 5');"></div>
+                <div class="carousel-caption">
+                    <h2><p style="color:red;">Ethnic Groups & Population Density in the City of London</p></h2>
+                </div>
+            </div>
+            <div class="item">
+              <iframe src="maps\custom.html" height=900px width=100% ></iframe>
+                <!-- Set the fourth background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 6');"></div>
+                <div class="carousel-caption">
+                    <h2><p style="color:red;">My Commute to School</p></h2>
+                </div>
+            </div>
+            <div class="item">
+              <iframe src="maps\Lab_7\maplegend.html" height=900px width=100% ></iframe>
+                <!-- Set the fourth background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 7');"></div>
+                <div class="carousel-caption">
+                    <h2><p style="color:red;">History of U.S.A.'s Major Cities' Population Size</p></h2>
+                </div>
+            </div>
+            <div class="item">
+              <iframe src="maps\Captial_Punishment\Final Project (Robert Senow).html" height=900px width=100% ></iframe>
+                <!-- Set the fourth background image using inline CSS below. -->
+                <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map 8');"></div>
+                <div class="carousel-caption">
+                    <h2><p style="color:red;">Murder Captials of America</p></h2>
+                </div>
+            </div>
+            <!-- <div class="item">
+                <!-- Set the fourth background image using inline CSS below. -->
+                <!-- <div class="fill" style="background-image:url('http://placehold.it/1900x1080&text=Map Final');"></div>
+                <div class="carousel-caption">
+                    <h2>Caption Final</h2>
+                </div>
+            </div> --> -->
+        </div>
+
+        <!-- Controls -->
+        <!-- <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+            <span class="icon-prev"></span>
+        </a>
+        <a class="right carousel-control" href="#myCarousel" data-slide="next">
+            <span class="icon-next"></span>
+        </a> -->
+
+    </header>
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1><u>Interactive Maps by Robert John Senow</u></h1>
+                <h3><p>In my Interactive Cartography Class, I learned many new and wonderful techniques related to creating an interactive map. Here are some techniques that I have learned: famaliarization with HTML code, basics javascript, and web elements. I learned to create the markers & popups to the basemap, and created a Choropleth map and used data classification methods using GeoJson data. I had a chance to work with software programs called Leaflet and D3 to create a hexbin map, pie charts, donut charts, animanted path map, and Spatiotemporal (timeline slider) Proportional Symbols map. Also, I understand how to apply different techniques and functions to the map and website such as layer controls, legends, and interactive components like hover and popup with information.</p></h3>
+            </div>
+        </div>
+
+        <hr>
+
+        <!-- Footer -->
+        <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p style="text-align:center;"><i>Copyright &copy; Robert John Senow 2017<i></p>
+                </div>
+            </div>
+            <!-- /.row -->
+        </footer>
+
+    </div>
+    <!-- /.container -->
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Script to Activate the Carousel -->
+    <script>
+    $('.carousel').carousel({
+        interval: 10000 //changes the speed
+    })
+    </script>
+
+</body>
+
+</html>
